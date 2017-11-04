@@ -1,0 +1,17 @@
+{
+  "name": "OWBot",
+  "version": "1.0.0",
+  "description": "The most detailed Overwatch Statistics Retrival Bot",
+  "main": "bot.js",
+  "author": "Rochan Avlur Venkat",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "discord.io": "^2.5.3",
+    "fetch": "^1.1.0",
+    "jquery": "^3.2.1",
+    "node-cmd": "^3.0.0",
+    "request": "^2.83.0",
+    "winston": "^2.4.0",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
