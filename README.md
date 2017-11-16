@@ -16,9 +16,9 @@ oWatcher is the only Overwatch statistics retrival Discord bot that your server 
 And much more! Try ow@help to get a full list of available commands
 
 # ToDo:
- - General account stats for competitive
- - Hero stats for competitive
- - Hero specific stats 
+ - General account stats for competitive - Done
+ - Hero stats for competitive - Done
+ - Hero specific stats
 
 # Installation
 
