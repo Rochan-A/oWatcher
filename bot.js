@@ -25,14 +25,106 @@ bot.on('ready', function (evt) {
 	logger.info(bot.username + ' - (' + bot.id + ')');
 });
 
-function formatMessage(type, obj){
-	var keysArray = Object.keys(obj);
-	var fmessage = type + "\n\n";
+function findvalue(key, keysArray, obj){
+
+	var value = 0;
 	for (var i = 0; i < keysArray.length; i++) {
-		var key = keysArray[i];
-		var value = obj[key];
-		fmessage = fmessage + key + "\t" + value + "\n"
+		var keyrec = keysArray[i];
+		if(String(keyrec) == String(key)){
+			value = obj[keyrec];
+		}
 	}
+	return value;
+}
+
+function formatMessage_stats(name, obj){
+	var keysArray = Object.keys(obj);
+	var fmessage = "```diff\n" + "Now displaying stats of " + name + "\n\n" +
+	"-General\n" +
+	"Games won:                " + findvalue('games_won', keysArray, obj) + "\n" +
+	"E:D ratio:                " + findvalue('kpd', keysArray, obj) + "\n" +
+	"Time Played:              " + findvalue('time_played', keysArray, obj) + "\n\n" +
+
+	"-Eliminations\n" +
+	"Total:                    " + findvalue('eliminations', keysArray, obj) + "\n" +
+	"Solo kills:               " + findvalue('solo_kills', keysArray, obj) + "\n" +
+	"Most in game:             " + findvalue('eliminations_most_in_game', keysArray, obj) + "\n" +
+	"Most solo-kills in game:  " + findvalue('solo_kills_most_in_game', keysArray, obj) + "\n" +
+	"Best kill streak:         " + findvalue('kill_streak_best', keysArray, obj) + "\n" +
+	"Time on fire:             " + findvalue('time_spent_on_fire', keysArray, obj)*findvalue("time_played", keysArray, obj) + "\n\n" +
+
+	"Solo Kills:               " + findvalue('solo_kills', keysArray, obj) + "\n" +
+	"Objective Kills:          " + findvalue('objective_kills', keysArray, obj) + "\n" +
+	"Final Blows:              " + findvalue('final_blows', keysArray, obj) + "\n" +
+	"Environmental Kills:      " + findvalue('environmental_kills', keysArray, obj) + "\n" +
+	"Melee Final Blows:        " + findvalue('melee_final_blows', keysArray, obj) + "\n\n" +
+
+	"-Damage\n" +
+	"Total:                    " + findvalue('all_damage_done', keysArray, obj) + "\n" +
+	"Most in game:             " + findvalue('all_damage_done_most_in_game', keysArray, obj) + "\n" +
+	"Barrier damage:           " + findvalue('barrier_damage_done', keysArray, obj) + "\n\n" +
+
+	"-Healing\n" +
+	"Total:                    " + findvalue('healing_done', keysArray, obj) + "\n" +
+	"Most in game:             " + findvalue('healing_done_most_in_game', keysArray, obj) + "\n" +
+	"Defensive assists:        " + findvalue('defensive_assists', keysArray, obj) + "\n" +
+	"Offensive assists:        " + findvalue('offensive_assists', keysArray, obj) + "\n\n" +
+
+	"-Medals\n" +
+	"Total:                    " + findvalue('medals', keysArray, obj) + "\n" +
+	"Gold:                     " + findvalue('medals_gold', keysArray, obj) + "\n" +
+	"Silver:                   " + findvalue('medals_silver', keysArray, obj) + "\n" +
+	"Bronze:                   " + findvalue('medals_bronze', keysArray, obj) + "```";
+
+	console.log(fmessage);
+	return fmessage;
+}
+
+function formatMessage_heros(name, obj){
+	var keysArray = Object.keys(obj);
+	var fmessage = "```diff\n" + "Now displaying stats of " + name + "\n\n" +
+	"-General\n" +
+	"Games won:                " + findvalue('games_won', keysArray, obj) + "\n" +
+	"E:D ratio:                " + findvalue('eliminations', keysArray, obj)/findvalue('deaths', keysArray, obj) + "\n" +
+	"Win Percentage:           " + findvalue('games_won', keysArray, obj)/findvalue('games_lost', keysArray, obj) + "\n" +
+	"Weapon Accuracy:          " + findvalue('weapon_accuracy', keysArray, obj) + "\n" +
+	"Time Played:              " + findvalue('time_played', keysArray, obj) + "\n\n" +
+
+	"-Eliminations\n" +
+	"Total:                    " + findvalue('eliminations', keysArray, obj) + "\n" +
+	"Solo kills:               " + findvalue('solo_kills', keysArray, obj) + "\n" +
+	"Most in game:             " + findvalue('eliminations_most_in_game', keysArray, obj) + "\n" +
+	"Avg per life:             " + findvalue('eliminations_per_life', keysArray, obj) + "\n" +
+	"Most solo-kills in game:  " + findvalue('solo_kills_most_in_game', keysArray, obj) + "\n" +
+	"Best kill streak:         " + findvalue('kill_streak_best', keysArray, obj) + "\n" +
+	"Time on fire:             " + findvalue('time_spent_on_fire', keysArray, obj)*findvalue("time_played", keysArray, obj) + "\n\n" +
+
+	"Solo Kills:               " + findvalue('solo_kills', keysArray, obj) + "\n" +
+	"Objective Kills:          " + findvalue('objective_kills', keysArray, obj) + "\n" +
+	"Final Blows:              " + findvalue('final_blows', keysArray, obj) + "\n" +
+	"Environmental Kills:      " + findvalue('environmental_kills', keysArray, obj) + "\n" +
+	"Melee Final Blows:        " + findvalue('melee_final_blows', keysArray, obj) + "\n\n" +
+
+	"-Damage\n" +
+	"Total:                    " + findvalue('all_damage_done', keysArray, obj) + "\n" +
+	"Most in game:             " + findvalue('all_damage_done_most_in_game', keysArray, obj) + "\n" +
+	"Most in life:             " + findvalue('all_damage_done_most_in_life', keysArray, obj) + "\n" +
+	"Barrier damage:           " + findvalue('barrier_damage_done', keysArray, obj) + "\n" +
+	"Most Barrier Dmg in game: " + findvalue('barrier_damage_done_most_in_game', keysArray, obj) + "\n\n" +
+
+	"-Healing\n" +
+	"Total:                    " + findvalue('healing_done', keysArray, obj) + "\n" +
+	"Most in game:             " + findvalue('healing_done_most_in_game', keysArray, obj) + "\n" +
+	"Defensive assists:        " + findvalue('defensive_assists', keysArray, obj) + "\n" +
+	"Offensive assists:        " + findvalue('offensive_assists', keysArray, obj) + "\n\n" +
+
+	"-Medals\n" +
+	"Total:                    " + findvalue('medals', keysArray, obj) + "\n" +
+	"Gold:                     " + findvalue('medals_gold', keysArray, obj) + "\n" +
+	"Silver:                   " + findvalue('medals_silver', keysArray, obj) + "\n" +
+	"Bronze:                   " + findvalue('medals_bronze', keysArray, obj) + "```";
+
+	console.log(fmessage);
 	return fmessage;
 }
 
@@ -40,162 +132,161 @@ function extractType(type, stats){
 
 	switch(type){
 		case 'doomfist':
-			return formatMessage(type, stats.doomfist.general_stats);
+			return formatMessage_heros(type, stats.doomfist.general_stats);
 		case 'genji':
-			return formatMessage(type, stats.genji.general_stats);
+			return formatMessage_heros(type, stats.genji.general_stats);
 
 		case 'mccree':
-			return formatMessage(type, stats.mccree.general_stats);
+			return formatMessage_heros(type, stats.mccree.general_stats);
 
 		case 'pharah':
-			return formatMessage(type, stats.pharah.general_stats);
+			return formatMessage_heros(type, stats.pharah.general_stats);
 
 		case 'reaper':
-			return formatMessage(type, stats.reaper.general_stats);
+			return formatMessage_heros(type, stats.reaper.general_stats);
 
 		case 'soldier76':
-			return formatMessage(type, stats.soldier76.general_stats);
+			return formatMessage_heros(type, stats.soldier76.general_stats);
 
 		case 'sombra':
-			return formatMessage(type, stats.sombra.general_stats);
+			return formatMessage_heros(type, stats.sombra.general_stats);
 
 		case 'tracer':
-			return formatMessage(type, stats.tracer.general_stats);
+			return formatMessage_heros(type, stats.tracer.general_stats);
 
 		case 'bastion':
-			return formatMessage(type, stats.bastion.general_stats);
+			return formatMessage_heros(type, stats.bastion.general_stats);
 
 		case 'hanzo':
-			return formatMessage(type, stats.hanzo.general_stats);
+			return formatMessage_heros(type, stats.hanzo.general_stats);
 
 		case 'junkrat':
-			return formatMessage(type, stats.junkrat.general_stats);
+			return formatMessage_heros(type, stats.junkrat.general_stats);
 
 		case 'mei':
-			return formatMessage(type, stats.mei.general_stats);
+			return formatMessage_heros(type, stats.mei.general_stats);
 
 		case 'torbjorn':
-			return formatMessage(type, stats.torbjorn.general_stats);
+			return formatMessage_heros(type, stats.torbjorn.general_stats);
 
 		case 'widowmaker':
-			return formatMessage(type, stats.widowmaker.general_stats);
+			return formatMessage_heros(type, stats.widowmaker.general_stats);
 
 		case 'dva':
-			return formatMessage(type, stats.dva.general_stats);
+			return formatMessage_heros(type, stats.dva.general_stats);
 
 		case 'orisa':
-			return formatMessage(type, stats.orisa.general_stats);
+			return formatMessage_heros(type, stats.orisa.general_stats);
 
 		case 'reinhardt':
-			return formatMessage(type, stats.reinhardt.general_stats);
+			return formatMessage_heros(type, stats.reinhardt.general_stats);
 
 		case 'roadhog':
-			return formatMessage(type, stats.roadhog.general_stats);
+			return formatMessage_heros(type, stats.roadhog.general_stats);
 
 		case 'winston':
-			return formatMessage(type, stats.winston.general_stats);
+			return formatMessage_heros(type, stats.winston.general_stats);
 
 		case 'zarya':
-			return formatMessage(type, stats.zarya.general_stats);
+			return formatMessage_heros(type, stats.zarya.general_stats);
 
 		case 'ana':
-			return formatMessage(type, stats.ana.general_stats);
+			return formatMessage_heros(type, stats.ana.general_stats);
 
 		case 'lucio':
-			return formatMessage(type, stats.lucio.general_stats);
+			return formatMessage_heros(type, stats.lucio.general_stats);
 
 		case 'mercy':
-			return formatMessage(type, stats.mercy.general_stats);
+			return formatMessage_heros(type, stats.mercy.general_stats);
 
 		case 'symmetra':
-			return formatMessage(type, stats.symmetra.general_stats);
+			return formatMessage_heros(type, stats.symmetra.general_stats);
 
 		case 'zenyatta':
-			return formatMessage(type, stats.zenyatta.general_stats);
+			return formatMessage_heros(type, stats.zenyatta.general_stats);
 	}
 }
 
 function extractplaytime(type, playtime){
-	
+
 		switch(type){
 			case 'doomfist':
 				return playtime.doomfist;
 			case 'genji':
 				return playtime.genji;
-	
+
 			case 'mccree':
 				return playtime.mccree;
-	
+
 			case 'pharah':
 				return playtime.pharah;
-	
+
 			case 'reaper':
 				return playtime.reaper;
-	
+
 			case 'soldier76':
 				return playtime.soldier76;
-	
+
 			case 'sombra':
 				return playtime.sombra;
-	
+
 			case 'tracer':
 				return playtime.tracer;
-	
+
 			case 'bastion':
 				return playtime.bastion;
-	
+
 			case 'hanzo':
 				return playtime.hanzo;
-	
+
 			case 'junkrat':
 				return playtime.junkrat;
-	
+
 			case 'mei':
 				return playtime.mei;
-	
+
 			case 'torbjorn':
 				return playtime.torbjorn;
-	
+
 			case 'widowmaker':
 				return playtime.widowmaker;
-	
+
 			case 'dva':
 				return playtime.dva;
-	
+
 			case 'orisa':
 				return playtime.orisa;
-	
+
 			case 'reinhardt':
 				return playtime.reinhardt;
-	
+
 			case 'roadhog':
 				return playtime.roadhog;
-	
+
 			case 'winston':
 				return playtime.winston;
-	
+
 			case 'zarya':
 				return playtime.zarya;
-	
+
 			case 'ana':
 				return playtime.ana;
-	
+
 			case 'lucio':
 				return playtime.lucio;
-	
+
 			case 'mercy':
 				return playtime.mercy;
-	
+
 			case 'symmetra':
 				return playtime.symmetra;
-	
+
 			case 'zenyatta':
 				return playtime.zenyatta;
 		}
 }
 
-
-function RequestStats(user, userID, channelID, message, evt, name, location, number, type){
+function RequestStats(user, play_type, userID, channelID, message, evt, name, location, number, type){
 
 	if(location == "us"){
 		cmd.get(
@@ -206,7 +297,7 @@ function RequestStats(user, userID, channelID, message, evt, name, location, num
 					var respoo = json.us.stats;
 					bot.sendMessage({
 						to: channelID,
-						message: formatMessage(type, respoo.quickplay.game_stats)
+						message: (play_type == "c") ? formatMessage_stats(name, respoo.competitive.game_stats) : formatMessage_stats(name, respoo.quickplay.game_stats)
 					});
 				}else{
 					bot.sendMessage({
@@ -225,7 +316,7 @@ function RequestStats(user, userID, channelID, message, evt, name, location, num
 					var respoo = json.kr.stats;
 					bot.sendMessage({
 						to: channelID,
-						message: formatMessage(type, respoo.quickplay.game_stats)
+						message: (play_type == "c") ? formatMessage_stats(name, respoo.competitive.game_stats) : formatMessage_stats(name, respoo.quickplay.game_stats)
 					});
 				}else{
 					bot.sendMessage({
@@ -244,7 +335,7 @@ function RequestStats(user, userID, channelID, message, evt, name, location, num
 					var respoo = json.eu.stats;
 					bot.sendMessage({
 						to: channelID,
-						message: formatMessage(type, respoo.quickplay.game_stats)
+						message: (play_type == "c") ? formatMessage_stats(name, respoo.competitive.game_stats) : formatMessage_stats(name, respoo.quickplay.game_stats)
 					});
 				}else{
 					bot.sendMessage({
@@ -257,7 +348,7 @@ function RequestStats(user, userID, channelID, message, evt, name, location, num
 	}
 }
 
-function RequestHero(user, userID, channelID, message, evt, name, location, number, type){
+function RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, type){
 
 	if(location == "us"){
 		cmd.get(
@@ -265,14 +356,12 @@ function RequestHero(user, userID, channelID, message, evt, name, location, numb
 			function(err, data, stderr){
 				var json = JSON.parse(data);
 				if(json.us != null){
-					var playtime = json.us.heroes.playtime.quickplay;
-					var stats = json.us.heroes.stats.quickplay;
+					var playtime = (play_type == "c") ? json.us.heroes.playtime.competitive : json.us.heroes.playtime.quickplay;
+					var stats = (play_type == "c") ? json.us.heroes.stats.competitive : json.us.heroes.stats.quickplay;
 					if(extractplaytime(type, playtime) != 0.0){
-						var generalStats = extractType(type, stats);
-						console.log(generalStats);
 						bot.sendMessage({
 							to: channelID,
-							message: generalStats
+							message: extractType(type, stats)
 						});
 					}else{
 						bot.sendMessage({
@@ -294,14 +383,12 @@ function RequestHero(user, userID, channelID, message, evt, name, location, numb
 			function(err, data, stderr){
 				var json = JSON.parse(data);
 				if(json.kr != null){
-					var playtime = json.kr.heroes.playtime.quickplay;
-					var stats = json.kr.heroes.stats.quickplay;
+					var playtime = (play_type == "c") ? json.kr.heroes.playtime.competitive : json.kr.heroes.playtime.quickplay;
+					var stats = (play_type == "c") ? json.kr.heroes.stats.competitive : json.kr.heroes.stats.quickplay;
 					if(extractplaytime(type, playtime) != 0.0){
-						var generalStats = extractType(type, stats);
-						console.log(generalStats);
 						bot.sendMessage({
 							to: channelID,
-							message: generalStats
+							message: extractType(type, stats)
 						});
 					}else{
 						bot.sendMessage({
@@ -323,14 +410,12 @@ function RequestHero(user, userID, channelID, message, evt, name, location, numb
 			function(err, data, stderr){
 				var json = JSON.parse(data);
 				if(json.eu != null){
-					var playtime = json.eu.heroes.playtime.quickplay;
-					var stats = json.eu.heroes.stats.quickplay;
+					var playtime = (play_type == "c") ? json.eu.heroes.playtime.competitive : json.eu.heroes.playtime.quickplay;
+					var stats = (play_type == "c") ? json.eu.heroes.stats.competitive : json.eu.heroes.stats.quickplay;
 					if(extractplaytime(type, playtime) != 0.0){
-						var generalStats = extractType(type, stats);
-						console.log(generalStats);
 						bot.sendMessage({
 							to: channelID,
-							message: generalStats
+							message: extractType(type, stats)
 						});
 					}else{
 						bot.sendMessage({
@@ -359,81 +444,82 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 		var name = mesg[1];
 		var number = mesg[2];
 		var location = mesg[3];
+		var play_type = mesg[4];
 
 		switch(type) {
 
 			case 'stats':
-				RequestStats(user, userID, channelID, message, evt, name, location, number, 'stats');
+				RequestStats(user, play_type, userID, channelID, message, evt, name, location, number, 'stats');
 				break;
 
 			case 'doomfist':
 			case 'Doomfist':
 			case 'terrycrews':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'doomfist');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'doomfist');
 				break;
 
 			case 'genji':
 			case 'Genji':
 			case 'genji':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'genji');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'genji');
 				break;
 
 			case 'mccree':
 			case 'McCree':
 			case 'Mccree':
 			case 'itshighnoon':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'mccree');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'mccree');
 				break;
 
 			case 'pharah':
 			case 'Pharah':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'pharah');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'pharah');
 				break;
 
 			case 'reaper':
 			case 'Reaper':
 			case 'edgelord':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'reaper');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'reaper');
 				break;
 
 			case 'soldier':
 			case 'soldier76':
 			case 'Soldier':
 			case 'Soldier76':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'soldier76');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'soldier76');
 				break;
 
 			case 'sombra':
 			case 'Sombra':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'sombra');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'sombra');
 				break;
 
 			case 'tracer':
 			case 'Tracer':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'tracer');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'tracer');
 				break;
 
 			case 'bastion':
 			case 'Bastion':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'bastion');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'bastion');
 				break;
 
 			case 'hanzo':
 			case 'Hanzo':
 			case 'weeb':
 			case 'Weeb':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'hanzo');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'hanzo');
 				break;
 
 			case 'junkrat':
 			case 'Junkrat':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'junkrat');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'junkrat');
 				break;
 
 			case 'mei':
 			case 'Mei':
 			case 'stall':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'mei');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'mei');
 				break;
 
 			case 'torb':
@@ -442,14 +528,14 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 			case 'Torb':
 			case 'Torbjörn':
 			case 'Torbjorn':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'torbjorn');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'torbjorn');
 				break;
 
 			case 'widowmaker':
 			case 'widow':
 			case 'Widow':
 			case 'Widowmaker':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'widowmaker');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'widowmaker');
 				break;
 
 			case 'dva':
@@ -458,62 +544,62 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 			case 'D.Va':
 			case 'Dva':
 			case 'D.va':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'dva');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'dva');
 				break;
 
 			case 'orisa':
 			case 'Orisa':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'orisa');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'orisa');
 				break;
 
 			case 'Reinhardt':
 			case 'Rein':
 			case 'reinhardt':
 			case 'rein':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'reinhardt');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'reinhardt');
 				break;
 
 			case 'Roadhog':
 			case 'roadhog':
 			case 'hog':
 			case 'Hog':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'roadhog');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'roadhog');
 				break;
 
 			case 'Winston':
 			case 'monkey':
 			case 'winston':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'winston');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'winston');
 				break;
 
 			case 'Zarya':
 			case 'zarya':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'zarya');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'zarya');
 				break;
 
 			case 'Ana':
 			case 'ana':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'ana');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'ana');
 				break;
 
 			case 'Lúcio':
 			case 'Lucio':
 			case 'lúcio':
 			case 'lucio':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'lucio');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'lucio');
 				break;
 
 			case 'Mercy':
 			case 'mercy':
 			case 'rezpls':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'mercy');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'mercy');
 				break;
 
 			case 'Symmetra':
 			case 'symmetra':
 			case 'sym':
 			case 'toxic':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'symmetra');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'symmetra');
 				break;
 
 			case 'Zenyatta':
@@ -521,7 +607,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 			case 'zen':
 			case 'Zen':
 			case 'spacegandhi':
-				RequestHero(user, userID, channelID, message, evt, name, location, number, 'zenyatta');
+				RequestHero(user, play_type, userID, channelID, message, evt, name, location, number, 'zenyatta');
 				break;
 
 			case 'help':
@@ -539,7 +625,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 
 				bot.sendMessage({
 					to: channelID,
-					message: 'Noob, cant even type a fucking command'
+					message: 'Noob, cant even type a simple command'
 				});
 				break;
 
