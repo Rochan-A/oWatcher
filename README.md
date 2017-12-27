@@ -32,7 +32,17 @@ Before first run you will need to create an `auth.json` file. A bot token or the
 To start the bot just run
 `node bot.js`.
 
-License
-----
+## Feature Requests
 
-MIT
+Have a feature in mind? We'd love to hear about it. Feel free to [open an issue](https://github.com/Rochan-A/oWatcher/issues/new) and let us know.
+
+## Contribute
+
+Want to contribute to oWatcher? That's great! Be sure to check out the [CONTRIBUTE.md](CONTRIBUTE.md) doc for more information on how.
+
+## Contributors
+
+- Rochan Avlur  *(Maintainer)* - [@Rochan-A](https://github.com/Rochan-A)
+
+## [License](LICENSE)
+
